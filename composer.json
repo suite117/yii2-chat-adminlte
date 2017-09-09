@@ -26,7 +26,7 @@
         "yiisoft/yii2": "*",
         "kartik-v/yii2-helpers": "*"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "suite117\\chat\\": ""
