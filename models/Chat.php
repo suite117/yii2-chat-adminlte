@@ -1,6 +1,6 @@
 <?php
 
-namespace sintret\chat\models;
+namespace suite117\chat\models;
 
 use Yii;
 
@@ -60,7 +60,11 @@ class Chat extends \yii\db\ActiveRecord {
     }
 
     public static function records() {
-        return static::find()->orderBy('id desc')->limit(10)->all();
+        // 'id desc'
+        $models = array_reverse(static::find()->orderBy(['id' => SORT_DESC ])->limit(50)->all());
+        
+        
+        return $models;
     }
 
     public function data() {
@@ -72,18 +76,20 @@ class Chat extends \yii\db\ActiveRecord {
                 if (isset($model->user->$userField)) {
                     $avatar = $model->user->$userField;
                 } else{
-                    $avatar = Yii::$app->assetManager->getPublishedUrl("@vendor/sintret/yii2-chat-adminlte/assets/img/avatar.png");
+                    $avatar = Yii::$app->assetManager->getPublishedUrl("@vendor/suite117/yii2-chat-adminlte/assets/img/avatar.png");
                 }
                     
                 $output .= '<div class="item">
                 <img class="online" alt="user image" src="' . $avatar . '">
                 <p class="message">
-                    <a class="name" href="#">
-                        <small class="text-muted pull-right" style="color:green"><i class="fa fa-clock-o"></i> ' . \kartik\helpers\Enum::timeElapsed($model->updateDate) . '</small>
+                    
+                        <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> ' . \kartik\helpers\Enum::timeElapsed($model->updateDate) . '</small>
                         ' . $model->user->username . '
-                    </a>
+                    
                    ' . $model->message . '
                 </p>
+
+
             </div>';
             }
 
