@@ -1,25 +1,24 @@
 <?php
 
 /**
- * @link https://github.com/sintret/yii2-chat-adminlte
- * @copyright Copyright (c) 2015 Andy fitria <sintret@gmail.com>
+ * @link https://github.com/suite117/yii2-chat-adminlte
+ * @copyright Copyright (c) 2015 Andy fitria <suite117@gmail.com>
  * @license MIT
  */
 
-namespace sintret\chat;
+namespace suite117\chat;
 
 use Yii;
 use yii\base\Widget;
-use sintret\chat\models\Chat;
+use suite117\chat\models\Chat;
 
 /**
- * @author Andy Fitria <sintret@gmail.com>
+ * @author Andy Fitria <suite117@gmail.com>
  */
 class ChatRoom extends Widget {
 
-    public $sourcePath = '@vendor/sintret/yii2-chat-adminlte/assets';
-    public $css = [
-    ];
+    public $sourcePath = '@vendor/suite117/yii2-chat-adminlte/assets';
+    public $css;
     public $js = [ // Configured conditionally (source/minified) during init()
         'js/chat.js',
     ];
@@ -46,9 +45,10 @@ class ChatRoom extends Widget {
         }
 
         $this->model->userField = $this->userField;
-        Yii::$app->assetManager->publish("@vendor/sintret/yii2-chat-adminlte/assets/img/loadingAnimation.gif");
-        $this->loadingImage = Yii::$app->assetManager->getPublishedUrl("@vendor/sintret/yii2-chat-adminlte/assets/img/loadingAnimation.gif");
+        Yii::$app->assetManager->publish("@vendor/suite117/yii2-chat-adminlte/assets/img/loadingAnimation.gif");
+        $this->loadingImage = Yii::$app->assetManager->getPublishedUrl("@vendor/suite117/yii2-chat-adminlte/assets/img/loadingAnimation.gif");
 
+        
         parent::init();
     }
 
@@ -78,7 +78,7 @@ class ChatRoom extends Widget {
         else
             $userModel = Yii::$app->getUser()->identityClass;
 
-        $model = new \sintret\chat\models\Chat;
+        $model = new \suite117\chat\models\Chat;
         $model->userModel = $userModel;
         if ($userField)
             $model->userField = $userField;

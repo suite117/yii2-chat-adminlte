@@ -10,14 +10,29 @@ function reloadchat(message, clearChat) {
             if (clearChat == true) {
                 $("#chat_message").val("");
             }
-            $("#chat-box").html(html);
+            
+            //$('#div1').scrollTop($('#div1')[0].scrollHeight);
+            $cb = $("#chat-box");
+            $cb.html(html).animate({ scrollTop: $cb[0].scrollHeight}, 1000);
         }
     });
 }
 setInterval(function () {
     reloadchat('', false);
 }, 2000);
+
 $(".btn-send-comment").on("click", function () {
     var message = $("#chat_message").val();
     reloadchat(message, true);
 });
+
+
+// Agggiornamento premendo invio
+$("#chat_message").keypress(function (e) {
+	 var key = e.which;
+	 if(key == 13)  // the enter key code
+	  {
+		$(".btn-send-comment").click();
+	    return false;  
+	  }
+	});   
