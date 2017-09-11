@@ -16,7 +16,8 @@ class Chat extends \yii\db\ActiveRecord {
 
     public $userModel;
     public $userField;
-
+    public $theme;
+    
     /**
      * @inheritdoc
      */
@@ -71,6 +72,7 @@ class Chat extends \yii\db\ActiveRecord {
         $userField = $this->userField;
         $output = '';
         $models = Chat::records();
+        $n = 0;
         if ($models)
             foreach ($models as $model) {
                 if (isset($model->user->$userField)) {
@@ -78,19 +80,41 @@ class Chat extends \yii\db\ActiveRecord {
                 } else{
                     $avatar = Yii::$app->assetManager->getPublishedUrl("@vendor/suite117/yii2-chat-adminlte/assets/img/avatar.png");
                 }
-                    
-                $output .= '<div class="item">
-                <img class="online" alt="user image" src="' . $avatar . '">
-                <p class="message">
-                    
-                        <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> ' . \kartik\helpers\Enum::timeElapsed($model->updateDate) . '</small>
-                        ' . $model->user->username . '
-                    
-                   ' . $model->message . '
-                </p>
-
-
-            </div>';
+                  
+                if ($this->theme == "direct-chat") {
+                    $output .= '<div class="direct-chat-msg' . ($n % 2 == 0 ? '' : ' right') . '">
+                      <div class="direct-chat-info clearfix">
+                        
+                      </div>
+                      <!-- /.direct-chat-info -->
+                      <img class="direct-chat-img" src="' . $avatar . '" alt="message user image">
+                      <!-- /.direct-chat-img -->
+                      <div class="direct-chat-text">
+<span class="direct-chat-name pull-left">' . $model->user->username .'</span>
+                        <span class="direct-chat-timestamp pull-right"><i class="fa fa-clock-o"></i> ' . \kartik\helpers\Enum::timeElapsed($model->updateDate) . '</span>
+<br>
+                        ' . $model->message . '
+                      </div>
+                      <!-- /.direct-chat-text -->
+                    </div>';
+                }
+                else {
+                    $output .= '<div class="item">
+                    <img class="online" alt="user image" src="' . $avatar . '">
+                    <p class="message">
+                        <a href="#" class="name">
+                              <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> ' . \kartik\helpers\Enum::timeElapsed($model->updateDate) . '</small>
+                            ' . $model->user->username . '
+                        </a>
+                       ' . $model->message . '
+                    </p>
+ 
+                    </div>';
+                }
+            
+                
+                $n++;
+                
             }
 
         return $output;
